@@ -1,24 +1,19 @@
-# Pake image python yang stabil
-FROM python:3.9-slim
+FROM python:3.9
 
-# Install Chrome dan dependencies-nya
+# Install Chrome & Driver
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver \
     && rm -rf /var/lib/apt/lists/*
 
-# Set variabel lingkungan biar Selenium tau lokasi Chrome
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
-
-# Set direktori kerja
 WORKDIR /app
-
-# Copy semua file dari GitHub ke server Railway
 COPY . .
 
-# Install library selenium
+# Install Library
 RUN pip install --no-cache-dir selenium
 
-# Perintah buat jalanin bot
+# Hugging Face butuh akses ke port 7860, biarin aja kosong yang penting ada
+EXPOSE 7860
+
+# Jalankan bot
 CMD ["python", "goblok.py"]
