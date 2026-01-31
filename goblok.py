@@ -10,26 +10,24 @@ def run_bot():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-debugging-port=9222")
     
-    # Lokasi standar di Docker/Koyeb
     chrome_options.binary_location = "/usr/bin/chromium"
     service = Service("/usr/bin/chromedriver")
     
     driver = webdriver.Chrome(service=service, options=chrome_options)
     
     try:
-        # Pake Referrer biar makin meyakinkan
+        # Pake Referrer Gacor
         refs = ["https://www.google.com/", "https://t.co/", "https://www.bing.com/"]
         driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Referer': random.choice(refs)}})
         
         driver.get("http://loadtiktok.wuaze.com")
-        print(f"[+] Koyeb Power: Ngebom Target... [{time.strftime('%H:%M:%S')}]")
+        print(f"[+] HuggingFace Power: Menyerang... [{time.strftime('%H:%M:%S')}]")
         
-        # Nongkrong lebih lama (High Retention)
-        time.sleep(random.randint(60, 150)) 
-        
+        # Nongkrong lama (Anti Signal 9 karena RAM Gede)
+        time.sleep(random.randint(60, 180)) 
         driver.execute_script("window.scrollBy(0, 500);")
-        time.sleep(10)
         
     except Exception as e:
         print(f"[-] Error: {e}")
@@ -39,8 +37,4 @@ def run_bot():
 if __name__ == "__main__":
     while True:
         run_bot()
-        # Kasih jeda istirahat biar CPU VPS kaga teriak
-        jeda_napas = random.randint(30, 60)
-        print(f"[*] Istirahat {jeda_napas} detik...")
-        time.sleep(jeda_napas)
-        
+        time.sleep(10)
